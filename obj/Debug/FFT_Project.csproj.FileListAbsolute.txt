@@ -1,0 +1,9 @@
+c:\users\matthew\documents\visual studio 2013\Projects\FFT_Project\FFT_Project\bin\Debug\FFT_Project.exe.config
+c:\users\matthew\documents\visual studio 2013\Projects\FFT_Project\FFT_Project\bin\Debug\FFT_Project.exe
+c:\users\matthew\documents\visual studio 2013\Projects\FFT_Project\FFT_Project\bin\Debug\FFT_Project.pdb
+c:\users\matthew\documents\visual studio 2013\Projects\FFT_Project\FFT_Project\obj\Debug\FFT_Project.csprojResolveAssemblyReference.cache
+c:\users\matthew\documents\visual studio 2013\Projects\FFT_Project\FFT_Project\obj\Debug\FFT_Project.Form1.resources
+c:\users\matthew\documents\visual studio 2013\Projects\FFT_Project\FFT_Project\obj\Debug\FFT_Project.Properties.Resources.resources
+c:\users\matthew\documents\visual studio 2013\Projects\FFT_Project\FFT_Project\obj\Debug\FFT_Project.csproj.GenerateResource.Cache
+c:\users\matthew\documents\visual studio 2013\Projects\FFT_Project\FFT_Project\obj\Debug\FFT_Project.exe
+c:\users\matthew\documents\visual studio 2013\Projects\FFT_Project\FFT_Project\obj\Debug\FFT_Project.pdb
