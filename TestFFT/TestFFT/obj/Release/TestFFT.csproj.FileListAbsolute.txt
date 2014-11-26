@@ -1,0 +1,5 @@
+C:\Users\Matthew\Documents\Visual Studio 2013\Projects\TestFFT\TestFFT\bin\Release\TestFFT.exe
+C:\Users\Matthew\Documents\Visual Studio 2013\Projects\TestFFT\TestFFT\bin\Release\TestFFT.pdb
+C:\Users\Matthew\Documents\Visual Studio 2013\Projects\TestFFT\TestFFT\obj\Release\TestFFT.csprojResolveAssemblyReference.cache
+C:\Users\Matthew\Documents\Visual Studio 2013\Projects\TestFFT\TestFFT\obj\Release\TestFFT.exe
+C:\Users\Matthew\Documents\Visual Studio 2013\Projects\TestFFT\TestFFT\obj\Release\TestFFT.pdb
