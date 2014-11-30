@@ -10,3 +10,12 @@ c:\users\matthew\documents\visual studio 2013\Projects\FFT_Project\FFT_Project\o
 C:\Users\Matthew\Documents\Visual Studio 2013\Projects\FFT_Project\FFTequalizer\FFT_Project\bin\Debug\FFT_Project.exe.config
 C:\Users\Matthew\Documents\Visual Studio 2013\Projects\FFT_Project\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.exe
 C:\Users\Matthew\Documents\Visual Studio 2013\Projects\FFT_Project\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.pdb
+E:\Classwork\COP4020\FFTequalizer\FFT_Project\bin\Debug\FFT_Project.exe.config
+E:\Classwork\COP4020\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.exe
+E:\Classwork\COP4020\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.pdb
+E:\Classwork\COP4020\FFTequalizer\FFT_Project\bin\Debug\FFT_Project.exe
+E:\Classwork\COP4020\FFTequalizer\FFT_Project\bin\Debug\FFT_Project.pdb
+E:\Classwork\COP4020\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.csprojResolveAssemblyReference.cache
+E:\Classwork\COP4020\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.Form1.resources
+E:\Classwork\COP4020\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.Properties.Resources.resources
+E:\Classwork\COP4020\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.csproj.GenerateResource.Cache
