@@ -105,7 +105,7 @@ namespace FFT_Project
 
             chart1.Series["Series1"].Points.Clear();
 
-            for (int i = 2; i < data.Length-1; i += 2)
+            for (int i = 2; i < data.Length-3; i += 2)
             {
                 //FFTString += data[i];
                 //FFTString += Environment.NewLine;

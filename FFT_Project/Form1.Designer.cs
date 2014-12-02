@@ -50,9 +50,10 @@
             this.toolStripButton3});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(648, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(638, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
+            this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
             // 
             // toolStripButton1
             // 
@@ -99,27 +100,27 @@
             chartArea1.AxisX.LineWidth = 0;
             chartArea1.AxisX.MajorGrid.Enabled = false;
             chartArea1.AxisX.MajorTickMark.Enabled = false;
-            chartArea1.AxisY.IsStartedFromZero = false;
+            chartArea1.AxisY.Crossing = -1.7976931348623157E+308D;
+            chartArea1.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
             chartArea1.AxisY.LabelStyle.Enabled = false;
             chartArea1.AxisY.LineColor = System.Drawing.Color.Transparent;
             chartArea1.AxisY.LineWidth = 0;
             chartArea1.AxisY.MajorGrid.Enabled = false;
             chartArea1.AxisY.MajorTickMark.Enabled = false;
-            chartArea1.AxisY.Maximum = 4000D;
             chartArea1.AxisY.Minimum = 0D;
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Enabled = false;
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(12, 54);
+            this.chart1.Location = new System.Drawing.Point(2, 54);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(624, 274);
+            this.chart1.Size = new System.Drawing.Size(624, 402);
             this.chart1.TabIndex = 3;
             this.chart1.Text = "chart1";
             // 
@@ -127,7 +128,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(648, 340);
+            this.ClientSize = new System.Drawing.Size(638, 468);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.toolStrip1);

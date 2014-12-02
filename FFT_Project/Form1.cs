@@ -16,8 +16,13 @@ namespace FFT_Project
     {
         private static System.Timers.Timer aTimer;
         private static int counter = 0;
+        private static int bytesPerSecond = 0;
         private static double[] doubleArray;
-
+        private static int timerSpeed = 47;
+        private static double byteOffset = 0;
+        private static int sampleSize = 64;//128;//512;//1024;//4096;
+        private static double[] histogramValues = new double[sampleSize/2];
+ 
         private SoundPlayer songPlayer;
 
         public Form1()
@@ -30,40 +35,56 @@ namespace FFT_Project
             OpenFileDialog openedFile = new OpenFileDialog();
             openedFile.Filter = "wav files (*.wav)|*.wav";
 
-            if (openedFile.ShowDialog() == DialogResult.OK)
-            {
-                try
+                if (openedFile.ShowDialog() == DialogResult.OK)
                 {
-                    songPlayer = new SoundPlayer(openedFile.FileName);
+                    try
+                    {
+                        songPlayer = new SoundPlayer(openedFile.FileName);
 
-                    textBox1.Text = openedFile.FileName;
+                        textBox1.Text = openedFile.FileName;
 
-                    int fileHeaderSize = 44;
-                    byte[] bytes = File.ReadAllBytes(openedFile.FileName).Skip(fileHeaderSize).ToArray();
+                        int fileHeaderSize = 44;
 
-                    List<double> dList = new List<double>();
-                    bytes.ToList<byte>().ForEach(b => dList.Add(Convert.ToDouble(b)));
-                    doubleArray = dList.ToArray<double>();
+                        byte[] bytesPerSecondHeader = File.ReadAllBytes(openedFile.FileName).Skip(28).Take(4).ToArray();
 
-                    // Create a timer with a 1ms interval.
-                    aTimer = new System.Timers.Timer(75);
-                    // Hook up the Elapsed event for the timer. 
-                    aTimer.Elapsed += OnTimed;
-           
-                    
+                        String hexValue = "";
+
+                        for (int i = 3; i >= 0; i--)
+                        {
+                            hexValue += Convert.ToInt32(bytesPerSecondHeader[i]).ToString("X");
+                        }
+
+                        bytesPerSecond = int.Parse(hexValue, System.Globalization.NumberStyles.HexNumber);
+
+                        byteOffset = (double)(((double)bytesPerSecond / (double)sampleSize) * (50.0 / 1000.0));
+
+                        byte[] bytes = File.ReadAllBytes(openedFile.FileName).Skip(fileHeaderSize).ToArray();
+
+                        List<double> dList = new List<double>();
+                        bytes.ToList<byte>().ForEach(b => dList.Add(Convert.ToDouble(b)));
+                        doubleArray = dList.ToArray<double>();
+
+                        // Create a timer with a 1ms interval.
+                        aTimer = new System.Timers.Timer(timerSpeed);
+                        // Hook up the Elapsed event for the timer. 
+                        aTimer.Elapsed += OnTimed;
+
+
+                    }
+
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Could not find file specified");
+                    }
                 }
-
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Could not find file specified");
-                }
-            }
 
         }
 
         void OnTimed(object sender, EventArgs e)
         {
-            int sampleSize = 32;
+
+            
+            
             if (counter > doubleArray.Length / sampleSize)
             {
                 this.Invoke((MethodInvoker)delegate { chart1.Series["Series1"].Points.Clear(); });
@@ -72,24 +93,24 @@ namespace FFT_Project
             else
             {
                 this.Invoke((MethodInvoker)delegate { doFFT(doubleArray.Skip(counter * sampleSize).Take(sampleSize).ToArray()); });
-                counter += 475; // Skip ahead so we're not sampling concentrated areas repeatedly.
+                counter += Convert.ToInt32(byteOffset);//138;//350; // Skip ahead so we're not sampling concentrated areas repeatedly.
             }
+
         }
 
         private void doFFT(double[] data)
         {
             //String FFTString = "";
-
             FFT(data);
 
             chart1.Series["Series1"].Points.Clear();
 
-            for (int i = 0; i < data.Length; i++)
+            for (int i = 2; i < data.Length-3; i += 2)
             {
                 //FFTString += data[i];
                 //FFTString += Environment.NewLine;
-
-                chart1.Series["Series1"].Points.AddXY(i + 1, data[i]);
+                histogramValues[(i-2)/2] = (histogramValues[(i-2)/2] + (Math.Sqrt(data[i]*data[i]+data[i+1]*data[i+1]))) / 2;
+                chart1.Series["Series1"].Points.AddXY(i + 1, histogramValues[(i-2)/2]);
             }
 
             //textBox2.Text = FFTString;
@@ -203,6 +224,11 @@ namespace FFT_Project
                 }
                 j += h;
             } // bit reverse loop                                                                                
+        }
+
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }
