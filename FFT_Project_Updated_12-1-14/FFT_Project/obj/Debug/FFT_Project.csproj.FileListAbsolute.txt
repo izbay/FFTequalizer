@@ -37,3 +37,12 @@ C:\Users\Matthew\Desktop\FFTequalizer-master\FFT_Project_Updated_12-1-14\FFT_Pro
 C:\Users\Matthew\Desktop\FFTequalizer-master\FFT_Project_Updated_12-1-14\FFT_Project\obj\Debug\FFT_Project.Form1.resources
 C:\Users\Matthew\Desktop\FFTequalizer-master\FFT_Project_Updated_12-1-14\FFT_Project\obj\Debug\FFT_Project.Properties.Resources.resources
 C:\Users\Matthew\Desktop\FFTequalizer-master\FFT_Project_Updated_12-1-14\FFT_Project\obj\Debug\FFT_Project.csproj.GenerateResource.Cache
+C:\Users\Matthew\Desktop\FFTEQs\FFTequalizer\FFT_Project_Updated_12-1-14\FFT_Project\bin\Debug\FFT_Project.exe.config
+C:\Users\Matthew\Desktop\FFTEQs\FFTequalizer\FFT_Project_Updated_12-1-14\FFT_Project\obj\Debug\FFT_Project.exe
+C:\Users\Matthew\Desktop\FFTEQs\FFTequalizer\FFT_Project_Updated_12-1-14\FFT_Project\obj\Debug\FFT_Project.pdb
+C:\Users\Matthew\Desktop\FFTEQs\FFTequalizer\FFT_Project_Updated_12-1-14\FFT_Project\bin\Debug\FFT_Project.exe
+C:\Users\Matthew\Desktop\FFTEQs\FFTequalizer\FFT_Project_Updated_12-1-14\FFT_Project\bin\Debug\FFT_Project.pdb
+C:\Users\Matthew\Desktop\FFTEQs\FFTequalizer\FFT_Project_Updated_12-1-14\FFT_Project\obj\Debug\FFT_Project.csprojResolveAssemblyReference.cache
+C:\Users\Matthew\Desktop\FFTEQs\FFTequalizer\FFT_Project_Updated_12-1-14\FFT_Project\obj\Debug\FFT_Project.Form1.resources
+C:\Users\Matthew\Desktop\FFTEQs\FFTequalizer\FFT_Project_Updated_12-1-14\FFT_Project\obj\Debug\FFT_Project.Properties.Resources.resources
+C:\Users\Matthew\Desktop\FFTEQs\FFTequalizer\FFT_Project_Updated_12-1-14\FFT_Project\obj\Debug\FFT_Project.csproj.GenerateResource.Cache
