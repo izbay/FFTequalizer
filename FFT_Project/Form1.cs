@@ -19,7 +19,6 @@ namespace FFT_Project
         private static int bytesPerSecond = 0;
         private static double[] doubleArray;
 
-        //debug / testing
         private const int timerSpeedTest = 50;
         private static int timerSpeed = timerSpeedTest-3;
 
@@ -79,12 +78,36 @@ namespace FFT_Project
 
                     }
 
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         MessageBox.Show("Could not find file specified");
                     }
                 }
 
+        }
+
+        private void playSong(object sender, EventArgs e)
+        {
+
+            try
+            {
+                counter = 0;
+                songPlayer.Play();
+                aTimer.Start();
+            }
+
+            catch (Exception)
+            {
+                MessageBox.Show("Could not find file specified");
+            }
+
+        }
+
+        private void stopSong(object sender, EventArgs e)
+        {
+            aTimer.Stop();
+            chart1.Series["Series1"].Points.Clear();
+            songPlayer.Stop();
         }
 
         void OnTimed(object sender, EventArgs e)
@@ -103,6 +126,7 @@ namespace FFT_Project
 
         }
 
+        // Wrapper function to prepare data, run FFT, and display results in GUI.
         private void doFFT(double[] data)
         {
             //String FFTString = "";
@@ -111,125 +135,93 @@ namespace FFT_Project
 
             chart1.Series["Series1"].Points.Clear();
 
-            for (int i = 2; i < data.Length-3; i += 2)
+            for (int i = 2; i < data.Length - 3; i += 2)
             {
                 //FFTString += data[i];
                 //FFTString += Environment.NewLine;
-                histogramValues[(i-2)/2] = (histogramValues[(i-2)/2] + (Math.Sqrt(data[i]*data[i]+data[i+1]*data[i+1]))) / 2;
-                chart1.Series["Series1"].Points.AddXY(i + 1, histogramValues[(i-2)/2]); 
+                histogramValues[(i - 2) / 2] = (histogramValues[(i - 2) / 2] + (Math.Sqrt(data[i] * data[i] + data[i + 1] * data[i + 1]))) / 2;
+                chart1.Series["Series1"].Points.AddXY(i + 1, histogramValues[(i - 2) / 2]);
             }
 
             //textBox2.Text = FFTString;
         }
 
-        private void playSong(object sender, EventArgs e)
-        {
-
-            try
-            {
-                counter = 0;
-                songPlayer.Play();
-                aTimer.Start();
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show("Could not find file specified");
-            }
-             
-        }
-
-        private void stopSong(object sender, EventArgs e)
-        {
-            aTimer.Stop();
-            chart1.Series["Series1"].Points.Clear();
-            songPlayer.Stop();
-        }
-
-        /** 
-         * Code below taken from http://www.lomont.org/Software/Misc/FFT/LomontFFT.html for reference.
-         * We will have to study/rewrite it as necessary, but this at least gets us moving.
-        **/
-
         public void FFT(double[] data)
         {
-            Reverse(data);                                                    
-
-            // do transform: so single point transforms, then doubles, etc.
-            int n = data.Length / 2, mmax = 1;
-            while (n > mmax)
+            int len = data.Length / 2;
+    
+            BitReverse(data, len);                                                    
+            for(int i = 1; i < len; i *= 2)
             {
-                var istep = 2 * mmax;
-                var theta = Math.PI / mmax;
-                double wr = 1, wi = 0;
-                var wpr = Math.Cos(theta);
-                var wpi = Math.Sin(theta);
-                for (var m = 0; m < istep; m += 2)
+                int i_next = i * 2;
+                double x = Math.PI / i, a = 0, b = 1;
+                double cosx = Math.Cos(x), sinx = Math.Sin(x);
+                for (int j = 0; j < i_next; j += 2)
                 {
-                    for (var k = m; k < 2 * n; k += 2 * istep)
+                    for (int k = j; k < 2 * len; k += 2 * i_next)
                     {
-                        var j = k + istep;
-                        var tempr = wr * data[j] - wi * data[j + 1];
-                        var tempi = wi * data[j] + wr * data[j + 1];
-                        data[j] = data[k] - tempr;
-                        data[j + 1] = data[k + 1] - tempi;
-                        data[k] = data[k] + tempr;
-                        data[k + 1] = data[k + 1] + tempi;
+                        int m = k + i_next;
+                        double a_temp = a * data[m] + b * data[m + 1];
+                        double b_temp = b * data[m] - a * data[m + 1];
+                
+                        data[m] = data[k] - b_temp;
+                        data[m + 1] = data[k + 1] - a_temp;
+                        data[k] = data[k] + b_temp;
+                        data[k + 1] = data[k + 1] + a_temp;
                     }
-                    var t = wr; // trig recurrence                                                               
-                    wr = wr * wpr - wi * wpi;
-                    wi = wi * wpr + t * wpi;
+                    double temp = a;                                                               
+                    a = a * cosx + b * sinx;
+                    b = b * cosx - temp * sinx;
                 }
-                mmax = istep;
             }
         }
 
-        static void Reverse(double[] data)
+        static void BitReverse(double[] data, int len)
         {
-            // bit reverse the indices. This is exercise 5 in section                                            
-            // 7.2.1.1 of Knuth's TAOCP the idea is a binary counter                                             
-            // in k and one with bits reversed in j                                                              
-            int j = 0, k = 0, n = data.Length/2; // Knuth R1: initialize                                                            
-            var top = n / 2;  // this is Knuth's 2^(n-1)                                                         
+            int i = 0, j = 0;
+
             while (true)
             {
-                // Knuth R2: swap - swap j+1 and k+2^(n-1), 2 entries each                                       
-                var t = data[j + 2];
-                data[j + 2] = data[k + n];
-                data[k + n] = t;
-                t = data[j + 3];
-                data[j + 3] = data[k + n + 1];
-                data[k + n + 1] = t;
-                if (j > k)
-                { // swap two more                                                                               
-                    // j and k                                                                                   
-                    t = data[j];
-                    data[j] = data[k];
-                    data[k] = t;
-                    t = data[j + 1];
-                    data[j + 1] = data[k + 1];
-                    data[k + 1] = t;
-                    // j + top + 1 and k+top + 1                                                                 
-                    t = data[j + n + 2];
-                    data[j + n + 2] = data[k + n + 2];
-                    data[k + n + 2] = t;
-                    t = data[j + n + 3];
-                    data[j + n + 3] = data[k + n + 3];
-                    data[k + n + 3] = t;
-                }
-                // Knuth R3: advance k                                                                           
-                k += 4;
-                if (k >= n)
-                    break;
-                // Knuth R4: advance j                                                                           
-                var h = top;
-                while (j >= h)
+                // Do the swaps.
+                double temp = data[i + 2];
+                data[i + 2] = data[j + len];
+                data[j + len] = temp;
+
+                temp = data[i + 3];
+                data[i + 3] = data[j + len + 1];
+                data[j + len + 1] = temp;
+
+                if (i > j)
                 {
-                    j -= h;
-                    h /= 2;
+                    temp = data[i];
+                    data[i] = data[j];
+                    data[j] = temp;
+
+                    temp = data[i + 1];
+                    data[i + 1] = data[j + 1];
+                    data[j + 1] = temp;
+
+                    temp = data[i + len + 2];
+                    data[i + len + 2] = data[j + len + 2];
+                    data[j + len + 2] = temp;
+
+                    temp = data[i + len + 3];
+                    data[i + len + 3] = data[j + len + 3];
+                    data[j + len + 3] = temp;
                 }
-                j += h;
-            } // bit reverse loop                                                                                
+
+                j += 4;
+                if (j >= len) break;
+
+                // len is guaranteed to be divisible by 2.
+                int k = len / 2;
+                while (i >= k)
+                {
+                    i -= k;
+                    k /= 2;
+                }
+                i += k;
+            }
         }
 
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
