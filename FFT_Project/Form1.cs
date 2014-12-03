@@ -18,9 +18,13 @@ namespace FFT_Project
         private static int counter = 0;
         private static int bytesPerSecond = 0;
         private static double[] doubleArray;
-        private static int timerSpeed = 47;
+
+        //debug / testing
+        private const int timerSpeedTest = 50;
+        private static int timerSpeed = timerSpeedTest-3;
+
         private static double byteOffset = 0;
-        private static int sampleSize = 64;//128;//512;//1024;//4096;
+        private static int sampleSize = 64;
         private static double[] histogramValues = new double[sampleSize/2];
  
         private SoundPlayer songPlayer;
@@ -45,18 +49,21 @@ namespace FFT_Project
 
                         int fileHeaderSize = 44;
 
-                        byte[] bytesPerSecondHeader = File.ReadAllBytes(openedFile.FileName).Skip(28).Take(4).ToArray();
+                        byte[] bytesPerSecondHeader = File.ReadAllBytes(openedFile.FileName).Skip(28).Take(4).ToArray(); // get the bytes from the header file that correspond to the bytes/second 
 
                         String hexValue = "";
 
                         for (int i = 3; i >= 0; i--)
                         {
-                            hexValue += Convert.ToInt32(bytesPerSecondHeader[i]).ToString("X");
+                            hexValue += Convert.ToInt32(bytesPerSecondHeader[i]).ToString("X"); // convert into 32-bit hex 
+                            // band-aid
+                            if (bytesPerSecondHeader[i] == 0)
+                                hexValue += "0";
                         }
 
-                        bytesPerSecond = int.Parse(hexValue, System.Globalization.NumberStyles.HexNumber);
+                        bytesPerSecond = int.Parse(hexValue, System.Globalization.NumberStyles.HexNumber); // convert 32-bit hex into 32-bit signed int
 
-                        byteOffset = (double)(((double)bytesPerSecond / (double)sampleSize) * (50.0 / 1000.0));
+                        byteOffset = (double)(((double)bytesPerSecond / (double)sampleSize) * (50.0 / 1000.0)); // find a 'byte offset' to move the FFT through the file in time with the audio 
 
                         byte[] bytes = File.ReadAllBytes(openedFile.FileName).Skip(fileHeaderSize).ToArray();
 
@@ -83,8 +90,6 @@ namespace FFT_Project
         void OnTimed(object sender, EventArgs e)
         {
 
-            
-            
             if (counter > doubleArray.Length / sampleSize)
             {
                 this.Invoke((MethodInvoker)delegate { chart1.Series["Series1"].Points.Clear(); });
@@ -93,7 +98,7 @@ namespace FFT_Project
             else
             {
                 this.Invoke((MethodInvoker)delegate { doFFT(doubleArray.Skip(counter * sampleSize).Take(sampleSize).ToArray()); });
-                counter += Convert.ToInt32(byteOffset);//138;//350; // Skip ahead so we're not sampling concentrated areas repeatedly.
+                counter += Convert.ToInt32(byteOffset); // Skip ahead so we're not sampling concentrated areas repeatedly.
             }
 
         }
@@ -101,6 +106,7 @@ namespace FFT_Project
         private void doFFT(double[] data)
         {
             //String FFTString = "";
+
             FFT(data);
 
             chart1.Series["Series1"].Points.Clear();
@@ -110,7 +116,7 @@ namespace FFT_Project
                 //FFTString += data[i];
                 //FFTString += Environment.NewLine;
                 histogramValues[(i-2)/2] = (histogramValues[(i-2)/2] + (Math.Sqrt(data[i]*data[i]+data[i+1]*data[i+1]))) / 2;
-                chart1.Series["Series1"].Points.AddXY(i + 1, histogramValues[(i-2)/2]);
+                chart1.Series["Series1"].Points.AddXY(i + 1, histogramValues[(i-2)/2]); 
             }
 
             //textBox2.Text = FFTString;
