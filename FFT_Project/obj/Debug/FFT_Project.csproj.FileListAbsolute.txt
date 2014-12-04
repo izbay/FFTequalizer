@@ -55,3 +55,12 @@ C:\Users\Matthew\Desktop\FFTEQs\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.c
 C:\Users\Matthew\Desktop\FFTEQs\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.Form1.resources
 C:\Users\Matthew\Desktop\FFTEQs\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.Properties.Resources.resources
 C:\Users\Matthew\Desktop\FFTEQs\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.csproj.GenerateResource.Cache
+C:\Users\Matthew\Desktop\FFTEQs\FFTEQ(1242014)\FFTequalizer\FFT_Project\bin\Debug\FFT_Project.exe.config
+C:\Users\Matthew\Desktop\FFTEQs\FFTEQ(1242014)\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.exe
+C:\Users\Matthew\Desktop\FFTEQs\FFTEQ(1242014)\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.pdb
+C:\Users\Matthew\Desktop\FFTEQs\FFTEQ(1242014)\FFTequalizer\FFT_Project\bin\Debug\FFT_Project.exe
+C:\Users\Matthew\Desktop\FFTEQs\FFTEQ(1242014)\FFTequalizer\FFT_Project\bin\Debug\FFT_Project.pdb
+C:\Users\Matthew\Desktop\FFTEQs\FFTEQ(1242014)\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.csprojResolveAssemblyReference.cache
+C:\Users\Matthew\Desktop\FFTEQs\FFTEQ(1242014)\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.Form1.resources
+C:\Users\Matthew\Desktop\FFTEQs\FFTEQ(1242014)\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.Properties.Resources.resources
+C:\Users\Matthew\Desktop\FFTEQs\FFTEQ(1242014)\FFTequalizer\FFT_Project\obj\Debug\FFT_Project.csproj.GenerateResource.Cache

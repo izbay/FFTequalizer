@@ -20,11 +20,11 @@ namespace FFT_Project
         private static double[] doubleArray;
 
         private const int timerSpeedTest = 50;
-        private static int timerSpeed = timerSpeedTest-3;
+        private static int timerSpeed = timerSpeedTest-5;
 
         private static double byteOffset = 0;
-        private static int sampleSize = 64;
-        private static double[] histogramValues = new double[sampleSize/2];
+        private static int sampleSize = 4096;
+        private static double[] histogramValues = new double[sampleSize];
  
         private SoundPlayer songPlayer;
 
@@ -131,10 +131,27 @@ namespace FFT_Project
         {
             //String FFTString = "";
 
-            FFT(data);
+            if (sampleSize <= data.Length) FFT(data);
 
             chart1.Series["Series1"].Points.Clear();
 
+            for (int i = 2; i < sampleSize / 4; i = i << 1)
+            {
+                double sum = 0, n = 0;
+                //average from data[i] --> data[i*i]
+                for (int j = i; j < (i << 1); j += 2)
+                {
+                    sum += (Math.Sqrt(data[j] * data[j] + data[j + 1] * data[j + 1]));
+                    n++;
+                }
+
+                // take log base 2 of i
+                histogramValues[(int)Math.Log(i, 2) - 1] = (histogramValues[(int)Math.Log(i, 2) - 1] + (sum / n)) / 2;
+
+                chart1.Series["Series1"].Points.AddXY(Math.Log(i, 2), histogramValues[(int)Math.Log(i, 2) - 1]);
+            }
+
+            /*
             for (int i = 2; i < data.Length - 3; i += 2)
             {
                 //FFTString += data[i];
@@ -142,6 +159,7 @@ namespace FFT_Project
                 histogramValues[(i - 2) / 2] = (histogramValues[(i - 2) / 2] + (Math.Sqrt(data[i] * data[i] + data[i + 1] * data[i + 1]))) / 2;
                 chart1.Series["Series1"].Points.AddXY(i + 1, histogramValues[(i - 2) / 2]);
             }
+            */
 
             //textBox2.Text = FFTString;
         }
