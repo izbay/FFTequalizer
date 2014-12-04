@@ -42,6 +42,7 @@ namespace FFT_Project
                 {
                     try
                     {
+                        stopSong(sender, e);
                         songPlayer = new SoundPlayer(openedFile.FileName);
 
                         textBox1.Text = openedFile.FileName;
@@ -88,7 +89,7 @@ namespace FFT_Project
 
         private void playSong(object sender, EventArgs e)
         {
-
+            stopSong(sender, e);
             try
             {
                 counter = 0;
@@ -105,9 +106,9 @@ namespace FFT_Project
 
         private void stopSong(object sender, EventArgs e)
         {
-            aTimer.Stop();
+            if(aTimer != null) aTimer.Stop();
             chart1.Series["Series1"].Points.Clear();
-            songPlayer.Stop();
+            if(songPlayer != null) songPlayer.Stop();
         }
 
         void OnTimed(object sender, EventArgs e)
@@ -139,7 +140,7 @@ namespace FFT_Project
             {
                 double sum = 0, n = 0;
                 //average from data[i] --> data[i*i]
-                for (int j = i; j < (i << 1); j += 2)
+                for (int j = i; j < (i << 1) - 1; j += 2)
                 {
                     sum += (Math.Sqrt(data[j] * data[j] + data[j + 1] * data[j + 1]));
                     n++;

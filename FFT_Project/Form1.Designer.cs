@@ -33,7 +33,7 @@
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.Load = new System.Windows.Forms.ToolStripButton();
+            this.LoadFile = new System.Windows.Forms.ToolStripButton();
             this.Play = new System.Windows.Forms.ToolStripButton();
             this.Stop = new System.Windows.Forms.ToolStripButton();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -45,7 +45,7 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Load,
+            this.LoadFile,
             this.Play,
             this.Stop});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -57,13 +57,13 @@
             // 
             // Load
             // 
-            this.Load.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Load.Image = ((System.Drawing.Image)(resources.GetObject("Load.Image")));
-            this.Load.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Load.Name = "Load";
-            this.Load.Size = new System.Drawing.Size(23, 22);
-            this.Load.Text = "Load";
-            this.Load.Click += new System.EventHandler(this.loadWaveFile);
+            this.LoadFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.LoadFile.Image = ((System.Drawing.Image)(resources.GetObject("Load.Image")));
+            this.LoadFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.LoadFile.Name = "Load";
+            this.LoadFile.Size = new System.Drawing.Size(23, 22);
+            this.LoadFile.Text = "Load";
+            this.LoadFile.Click += new System.EventHandler(this.loadWaveFile);
             // 
             // Play
             // 
@@ -134,7 +134,7 @@
             this.Controls.Add(this.toolStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "FFT Equalizer";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
@@ -146,7 +146,7 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton Load;
+        private System.Windows.Forms.ToolStripButton LoadFile;
         private System.Windows.Forms.ToolStripButton Play;
         private System.Windows.Forms.ToolStripButton Stop;
         private System.Windows.Forms.TextBox textBox1;
