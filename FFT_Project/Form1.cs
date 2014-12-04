@@ -33,6 +33,11 @@ namespace FFT_Project
             InitializeComponent();
         }
 
+        /**
+         * Displays an open file dialog and create a SoundPlayer with the selected file,
+         * determines the sampling speed of the audio and read the sound data into an
+         * array, and sets up a timer and timer event.
+         */
         private void loadWaveFile(object sender, EventArgs e)
         {
             OpenFileDialog openedFile = new OpenFileDialog();
@@ -49,10 +54,12 @@ namespace FFT_Project
 
                         int fileHeaderSize = 44;
 
+                        // Read 4 bytes corresponding to the audio's sampling speed
                         byte[] bytesPerSecondHeader = File.ReadAllBytes(openedFile.FileName).Skip(28).Take(4).ToArray(); // get the bytes from the header file that correspond to the bytes/second 
 
                         String hexValue = "";
 
+                        // Convert the bytes into a 32-bit hexadecimal number
                         for (int i = 3; i >= 0; i--)
                         {
                             hexValue += Convert.ToInt32(bytesPerSecondHeader[i]).ToString("X"); // convert into 32-bit hex 
@@ -61,10 +68,13 @@ namespace FFT_Project
                                 hexValue += "0";
                         }
 
+                        // Convert from 32 bit hex to an integer
                         bytesPerSecond = int.Parse(hexValue, System.Globalization.NumberStyles.HexNumber); // convert 32-bit hex into 32-bit signed int
 
+                        // Determine how many bytes to move the FFT each time to sync with the music
                         byteOffset = (double)(((double)bytesPerSecond / (double)sampleSize) * (50.0 / 1000.0)); // find a 'byte offset' to move the FFT through the file in time with the audio 
 
+                        // Reads all bytes after the header into a data array
                         byte[] bytes = File.ReadAllBytes(openedFile.FileName).Skip(fileHeaderSize).ToArray();
 
                         List<double> dList = new List<double>();
@@ -75,8 +85,6 @@ namespace FFT_Project
                         aTimer = new System.Timers.Timer(timerSpeed);
                         // Hook up the Elapsed event for the timer. 
                         aTimer.Elapsed += OnTimed;
-
-
                     }
 
                     catch (Exception)
@@ -84,7 +92,6 @@ namespace FFT_Project
                         MessageBox.Show("Could not find file specified");
                     }
                 }
-
         }
 
         private void playSong(object sender, EventArgs e)
@@ -133,9 +140,15 @@ namespace FFT_Project
             //String FFTString = "";
 
             if (sampleSize <= data.Length) FFT(data);
+            // don't run an FFT if we don't have enough data points
+            else return;
 
             chart1.Series["Series1"].Points.Clear();
 
+            /* Create a histogram with an x-axis that is scaled by powers of two
+             * Bar 1 = data[2] thru data[4]; Bar 2 = data[4] thru data[8];
+             * Bar 3 = data[8] thru data[16]; Bar n = data[n] thru data[2*n] 
+             */
             for (int i = 2; i < sampleSize / 4; i = i << 1)
             {
                 double sum = 0, n = 0;
@@ -146,21 +159,11 @@ namespace FFT_Project
                     n++;
                 }
 
-                // take log base 2 of i
+                // take log base 2 of i to scale i into 0,1,2,3,...
                 histogramValues[(int)Math.Log(i, 2) - 1] = (histogramValues[(int)Math.Log(i, 2) - 1] + (sum / n)) / 2;
 
                 chart1.Series["Series1"].Points.AddXY(Math.Log(i, 2), histogramValues[(int)Math.Log(i, 2) - 1]);
             }
-
-            /*
-            for (int i = 2; i < data.Length - 3; i += 2)
-            {
-                //FFTString += data[i];
-                //FFTString += Environment.NewLine;
-                histogramValues[(i - 2) / 2] = (histogramValues[(i - 2) / 2] + (Math.Sqrt(data[i] * data[i] + data[i + 1] * data[i + 1]))) / 2;
-                chart1.Series["Series1"].Points.AddXY(i + 1, histogramValues[(i - 2) / 2]);
-            }
-            */
 
             //textBox2.Text = FFTString;
         }
